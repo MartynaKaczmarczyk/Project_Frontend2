@@ -1,0 +1,24 @@
+package com.example.Plant_tracker.models;
+
+import jakarta.persistence.*;
+import java.time.LocalDateTime;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.NoArgsConstructor;
+
+
+@Entity
+@Getter
+@Setter
+@NoArgsConstructor
+public class Event {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)  
+    private Long idEvent;
+    private String type;
+    private LocalDateTime date;
+
+    @ManyToOne
+    @JoinColumn(name = "plant_id", referencedColumnName = "id")  
+    private UserPlant plant;  
+}
