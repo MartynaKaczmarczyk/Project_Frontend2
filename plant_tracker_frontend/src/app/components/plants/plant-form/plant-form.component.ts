@@ -87,6 +87,7 @@ export class PlantFormComponent implements OnInit {
         lastWatered: rawValue.lastWatered, 
         created: rawValue.created
       };
+
       if (this.isEditMode) {
         this.plantService.updatePlant(plant, plant.id);
       } else {
@@ -95,17 +96,21 @@ export class PlantFormComponent implements OnInit {
           console.log(res);
           this.plantForm.reset();
           this.router.navigate(['/plants'], {});
-        });
+        },
+        (error) => alert('There was an error adding the plant: ' + error)
+        );     
       }
     }
   }
+
+  
 
   public loadSpecies(): void {
     this.plantService.loadSpecies().subscribe((res) => {
       console.log(res);
       this.species = res;
     },
-    (error) => alert('There was an error adding the plant: ' + error)
+    (error) => alert('There was an error while loading the plant: ' + error)
     );
   }
 
