@@ -4,6 +4,19 @@
     <p><strong>Description:</strong> {{ plant.description }}</p>
     <p><strong>Last watered:</strong> {{ plant.lastWatered }}</p>
     <p><strong>Created:</strong> {{ plant.created }}</p>
+    @if (plant.lastEvents.length > 0) {
+        <div>
+            <h4>Events:</h4>
+            <ul>
+                @for (event of plant.lastEvents; track event.idEvent) {
+                    <li>
+                        <div>Type: {{event.type}}</div>
+                        <div>Date of occurance: {{event.date}}</div>
+                    </li>
+                }
+            </ul>
+        </div>
+    }
 
     <button (click)="goToEditForm(plant.id)">Edit Plant</button>
     <button (click)="deletePlant(plant.id)">Delete Plant</button>

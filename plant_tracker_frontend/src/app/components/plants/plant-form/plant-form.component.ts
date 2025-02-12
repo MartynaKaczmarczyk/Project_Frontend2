@@ -80,9 +80,20 @@ export class PlantFormComponent implements OnInit {
           created: plant.created,
           events: plant.lastEvents
         });
-        console.log(plant.species );
-        console.log(this.plantForm.getRawValue());
+        console.log(plant.lastEvents );
         
+        plant.lastEvents.forEach((event) => {
+          this.plantForm.controls.events.push(
+            new FormGroup<EventForm>({
+              idEvent: new FormControl(event.idEvent, Validators.required),
+              type: new FormControl(event.type, Validators.required),
+              date: new FormControl(event.date, Validators.required),
+            })
+          );
+        });
+        console.log(this.plantForm.getRawValue(), "HHHHH");
+
+
       },
       (error) => alert('There was an error while loading the plant: ' + error)
       );
@@ -106,7 +117,6 @@ export class PlantFormComponent implements OnInit {
   public deleteEvent(index: number): void {
     this.plantForm.controls.events.removeAt(index);
   }
-
 
 
 

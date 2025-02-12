@@ -19,16 +19,16 @@ export class PlantService{
   public authHeader = 'Basic ' + btoa(`${this.username}:${this.password}`);
   
 
-  public addPlant(plant: Plant): Observable<Plant> {
+  public addPlant(plant: Plant): Observable<string> {
     const headers = new HttpHeaders({
       Authorization: this.authHeader,
     });
     console.log(plant, "WYSYŁANIE");
     
-    return this.httpClient.post<Plant>(
-      'http://localhost:8080/plants/46',
+    return this.httpClient.post<string>(
+      'http://localhost:8080/plants/48',
       plant,
-      {headers}
+      {headers, responseType: 'text' as 'json'}
     ).pipe(
       catchError((error) => {
         console.error('Error occurred while adding plant:', error);
