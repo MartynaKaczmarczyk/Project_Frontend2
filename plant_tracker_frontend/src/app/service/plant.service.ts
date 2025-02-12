@@ -1,10 +1,14 @@
 import { Injectable } from '@angular/core';
 import { Plant } from '../models/plant.model';
+import { Observable } from 'rxjs';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
 })
 export class PlantService{
+
+  private constructor(private httpClient: HttpClient) {}
 
   public plantsList: Plant[] = [];
 
@@ -21,18 +25,23 @@ export class PlantService{
     this.loadPlants();
   }
 
-  public loadPlants(): Plant[] {
-    const plants: Plant[] = [{
-      id: 2,
-      name: 'Fikus',
-      description: 'Popularna roślina domowa.',
-      species: {id:3, name: "Tropical"},
-      lastWatered: new Date(),
-      created: new Date()
-    }]; //JSON.parse(localStorage.getItem('books') || '[]');
-    this.plantsList = plants;
+  public loadPlants(): Observable<Plant[]> {
+    const username = 'john.doe@example.com';  
+    const password = 'password123'; 
+    const authHeader = 'Basic ' + btoa(`${username}:${password}`);
+    const headers = new HttpHeaders({
+      Authorization: authHeader,
+    });
     
-    return plants;
+    return this.httpClient.get<Plant[]>(
+      'http://localhost:8080/plants',
+      { headers }
+    );
+  
+    // const plants: Plant[] = []; //JSON.parse(localStorage.getItem('books') || '[]');
+    // this.plantsList = plants;
+    
+    // return plants;
   }
 
   public getPlantById(id: number): Plant | undefined {

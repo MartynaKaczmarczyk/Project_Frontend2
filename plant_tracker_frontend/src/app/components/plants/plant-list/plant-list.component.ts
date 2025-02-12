@@ -25,7 +25,11 @@ export class PlantListComponent implements OnInit{
   }
 
   private loadPlants(): void {
-    this.plants = this.plantService.loadPlants();
+    this.plantService.loadPlants().subscribe((res) => {
+      console.log(res);
+      this.plants = res;
+    });
+
   }
 
 
