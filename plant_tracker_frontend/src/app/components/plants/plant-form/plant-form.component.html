@@ -5,10 +5,10 @@
     <label for="description">Description</label>
     <input id="description" formControlName="description" />
   
-    <!-- <label for="species">Species</label>
+    <label for="species">Species</label>
     <select id="species" formControlName="species">
-      <option *ngFor="let species of speciesList" [ngValue]="species">{{ species.name }}</option>
-    </select> -->
+      <option *ngFor="let species of species" [ngValue]="species">{{ species.name }}</option>
+    </select>
   
     <label for="lastWatered">Last Watered</label>
     <input type="date" id="lastWatered" formControlName="lastWatered" />

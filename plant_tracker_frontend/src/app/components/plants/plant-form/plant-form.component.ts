@@ -25,6 +25,7 @@ import { RouterModule, Router, ActivatedRoute } from '@angular/router';
 export class PlantFormComponent implements OnInit {
 
   public isEditMode: boolean = false;
+  public species: Species[] = [];
 
   public constructor(
     private plantService: PlantService, 
@@ -50,6 +51,7 @@ export class PlantFormComponent implements OnInit {
   );
 
   public ngOnInit(): void {
+    this.loadSpecies();
     this.route.paramMap.subscribe((params) => {
       const id: number = Number(params.get('id'));
       if (id) {
@@ -85,11 +87,26 @@ export class PlantFormComponent implements OnInit {
         lastWatered: rawValue.lastWatered, 
         created: rawValue.created
       };
-      this.plantService.addPlant(plant);
-      this.plantForm.reset();
-
-      this.router.navigate(['/plants'], {});
+      if (this.isEditMode) {
+        this.plantService.updatePlant(plant, plant.id);
+      } else {
+        console.log(this.isEditMode);
+        this.plantService.addPlant(plant).subscribe((res)=> {
+          console.log(res);
+          this.plantForm.reset();
+          this.router.navigate(['/plants'], {});
+        });
+      }
     }
+  }
+
+  public loadSpecies(): void {
+    this.plantService.loadSpecies().subscribe((res) => {
+      console.log(res);
+      this.species = res;
+    },
+    (error) => alert('There was an error adding the plant: ' + error)
+    );
   }
 
 }
