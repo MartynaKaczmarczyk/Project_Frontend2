@@ -5,6 +5,7 @@ import java.time.LocalDateTime;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.NoArgsConstructor;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 
 @Entity
@@ -18,6 +19,7 @@ public class Event {
     private String type;
     private LocalDateTime date;
 
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "plant_id", referencedColumnName = "id")  
     private UserPlant plant;  

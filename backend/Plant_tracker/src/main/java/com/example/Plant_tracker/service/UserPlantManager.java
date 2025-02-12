@@ -6,6 +6,7 @@ import com.example.Plant_tracker.repositories.UserPlantRepository;
 import com.example.Plant_tracker.models.UserPlant;
 import com.example.Plant_tracker.models.Species;
 import com.example.Plant_tracker.models.AppUser;
+import com.example.Plant_tracker.models.Event;
 import com.example.Plant_tracker.repositories.SpeciesRepository;
 import com.example.Plant_tracker.repositories.AppUserRepository;
 import lombok.NoArgsConstructor;
@@ -13,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.Optional;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -54,19 +56,31 @@ public class UserPlantManager {
     public boolean addPlantForUser(Long userId, UserPlant newPlant) {
         AppUser user = appUserRepository.findById(userId)
             .orElseThrow(() -> new RuntimeException("User not found"));
-
+        System.out.println(newPlant);
         // Sprawdź, czy gatunek rośliny istnieje
         Species species = speciesRepository.findByName(newPlant.getSpecies().getName())
             .orElseThrow(() -> new RuntimeException("Species not found"));
-            if (user != null && species != null) {            newPlant.setSpecies(species);
-            newPlant.setUser(user);
-            newPlant.setCreated(LocalDateTime.now());
-            // Zapisz roślinę
-            userPlantRepository.save(newPlant);
-    
-            // Dodaj roślinę do listy roślin użytkownika
-            user.getUserPlants().add(newPlant);
-            appUserRepository.save(user);
+            if (user != null && species != null) {            
+                newPlant.setSpecies(species);
+                newPlant.setUser(user);
+                newPlant.setCreated(LocalDateTime.now());
+            List<Event> newEvents = newPlant.getLastEvents();
+            System.out.println(newPlant.getLastEvents());
+            System.out.println(newPlant.getId());
+            List<Event> eventsToAdd = new ArrayList<>(newEvents);
+        
+            // Dodaj każde zdarzenie do listy rośliny
+            for (Event newEvent : eventsToAdd) {
+                newEvent.setPlant(newPlant); 
+                newPlant.getLastEvents().add(newEvent);  
+            }
+                newPlant.setLastEvents(eventsToAdd);
+                userPlantRepository.save(newPlant);  
+                
+        
+                // Dodaj roślinę do listy roślin użytkownika
+                user.getUserPlants().add(newPlant);
+                appUserRepository.save(user);
             return true;
         } 
         return false;

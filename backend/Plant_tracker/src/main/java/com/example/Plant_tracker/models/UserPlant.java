@@ -35,10 +35,10 @@ public class UserPlant {
     private LocalDateTime lastWatered;
     private LocalDateTime created;
 
-    @OneToMany(mappedBy = "plant", cascade = CascadeType.ALL, fetch = FetchType.LAZY)  
+    @OneToMany(mappedBy = "plant", cascade = CascadeType.ALL)  
     private List<Event> lastEvents;
 
-    @OneToMany(mappedBy = "plant", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "plant", cascade = CascadeType.ALL)
     private List<Action> lastActions;
 
 }
