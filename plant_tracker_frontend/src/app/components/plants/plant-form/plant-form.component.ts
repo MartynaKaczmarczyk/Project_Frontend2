@@ -54,23 +54,24 @@ export class PlantFormComponent implements OnInit {
       const id: number = Number(params.get('id'));
       if (id) {
         this.isEditMode = true;
-        // this.loadPlantData(id);
+        this.loadPlantData(id);
       }
     });
   }
 
-  // private loadPlantData(id: number): void {
-  //   this.plantService.getPlantById(id)?.subscribe((plant: Plant) => {
-  //     this.plantForm.setValue({
-  //       id: plant.id,
-  //       name: plant.name,
-  //       description: plant.description,
-  //       species: plant.species,
-  //       lastWatered: plant.lastWatered,
-  //       created: plant.created,
-  //     });
-  //   });
-  // }
+  private loadPlantData(id: number): void {
+    this.plantService.getPlantById(id).subscribe((plant: Plant) => {
+
+      this.plantForm.setValue({
+        id: plant.id,
+        name: plant.name,
+        description: plant.description,
+        species: plant.species,
+        lastWatered: plant.lastWatered,
+        created: plant.created,
+      });
+    });
+  }
 
   public saveForm(): void {
     if (this.plantForm.valid) {

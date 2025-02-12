@@ -32,6 +32,9 @@ public class UserPlantManager {
     }
 
 
+    public Optional<UserPlant> getPlantById(Long id) {
+        return this.userPlantRepository.findById(id);
+    }
     //zwraca WSZYSTKIE rośliny
     public List<UserPlant> getAllPlants() {
         return this.userPlantRepository.findAll();
@@ -70,17 +73,17 @@ public class UserPlantManager {
     }
     
     //usuwanie roślinki
-    public String deletePlant(Long userId, Long plantId) {
+    public String deletePlant(Long plantId) {
         Optional<UserPlant> optionalPlant = userPlantRepository.findById(plantId);
         if (optionalPlant.isEmpty()) {
             return "Plant not found";
         }
 
         UserPlant plant = optionalPlant.get();
-        //Walidacja, czy roślinka należy do usera
-        if (!plant.getUser().getId().equals(userId)) {
-            return "You are not authorized to delete this plant";
-        }
+        // //Walidacja, czy roślinka należy do usera
+        // if (!plant.getUser().getId().equals(userId)) {
+        //     return "You are not authorized to delete this plant";
+        // }
 
         userPlantRepository.delete(plant);
         return "Plant successfully deleted";

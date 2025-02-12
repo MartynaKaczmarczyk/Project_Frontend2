@@ -12,19 +12,15 @@ export class PlantService{
 
   public plantsList: Plant[] = [];
 
-  // ngOnInit(): void {
-  //   console.log("LifeCycy;e");
-  //   // this.loadBooks();
-  // }
 
-  public addPlant(plant: Plant): void {
-    const plants: Plant[] = []; //JSON.parse(localStorage.getItem('books') || '[]');
-    plants.push(plant);
-    //localStorage.setItem('books', JSON.stringify(plants));
-    console.log('roślina zapisana:', plant);
-    this.loadPlants();
+  public addPlant(plant: Plant): Observable<Plant> {
+    return this.httpClient.post<Plant>(
+      'http://localhost:8080/plants',
+      plant
+    );
   }
 
+  
   public loadPlants(): Observable<Plant[]> {
     const username = 'john.doe@example.com';  
     const password = 'password123'; 
@@ -37,26 +33,33 @@ export class PlantService{
       'http://localhost:8080/plants',
       { headers }
     );
-  
-    // const plants: Plant[] = []; //JSON.parse(localStorage.getItem('books') || '[]');
-    // this.plantsList = plants;
+  }
+
+  public getPlantById(id: number): Observable<Plant>{
+    const username = 'john.doe@example.com';  
+    const password = 'password123'; 
+    const authHeader = 'Basic ' + btoa(`${username}:${password}`);
+    const headers = new HttpHeaders({
+      Authorization: authHeader,
+    });
     
-    // return plants;
+    return this.httpClient.get<Plant>(
+      `http://localhost:8080/plants/${id}`,
+      { headers }
+    );
   }
 
-  public getPlantById(id: number): Plant | undefined {
-    //const plants: Book[] = //JSON.parse(localStorage.getItem('books') || '[]');
-    return this.plantsList.find((plant) => plant.id === id);
-  }
 
-
-  public deletePlant(id: number | null): void {
-    console.log(id);
-    if (!id) return;
-    const plants: Plant[] = []; //JSON.parse(localStorage.getItem('books') || '[]');
-    const updatedPlants = plants.filter((plant) => plant.id !== id);
-    //localStorage.setItem('books', JSON.stringify(updatedBooks));
-    this.plantsList = updatedPlants;
-    console.log(this.plantsList);
+  public deletePlant(id: number | null): Observable<string> {
+    const username = 'john.doe@example.com';  
+    const password = 'password123'; 
+    const authHeader = 'Basic ' + btoa(`${username}:${password}`);
+    const headers = new HttpHeaders({
+      Authorization: authHeader,
+    });
+    
+    return this.httpClient.delete(`http://localhost:8080/plants/${id}`, {
+      headers, responseType: 'text'
+    });
   }
 }

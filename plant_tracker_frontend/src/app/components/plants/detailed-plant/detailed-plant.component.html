@@ -6,6 +6,7 @@
     <p><strong>Created:</strong> {{ plant.created }}</p>
 
     <button (click)="goToEditForm(plant.id)">Edit Plant</button>
+    <button (click)="deletePlant(plant.id)">Delete Plant</button>
 
 } @else {
     <p>Roślina o podanym ID nie została znaleziona.</p>

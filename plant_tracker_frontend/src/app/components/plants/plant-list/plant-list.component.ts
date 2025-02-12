@@ -32,7 +32,6 @@ export class PlantListComponent implements OnInit{
 
   }
 
-
   public goToDetails(id: number | null): void {
     this.router.navigate(['/plants', id, 'details'], {
       relativeTo: this.route,
@@ -41,8 +40,12 @@ export class PlantListComponent implements OnInit{
   }
 
   public deletePlant(id: number | null): void {
-    this.plantService.deletePlant(id);
-    this.loadPlants(); 
+    this.plantService.deletePlant(id).subscribe((res) => {
+      console.log(res);
+      this.loadPlants(); 
+    });
   }
+
+
 
 }

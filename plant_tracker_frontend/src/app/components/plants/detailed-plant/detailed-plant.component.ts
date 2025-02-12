@@ -23,7 +23,9 @@ export class DetailedPlantComponent implements OnInit {
   public ngOnInit(): void {
     this.route.params.subscribe((params) => {
       const plantId: number = Number(params['id']);
-      this.plant = this.plantService.getPlantById(plantId);
+      this.plantService.getPlantById(plantId).subscribe((res) => {
+        this.plant = res;
+      });
     });
   }
 
@@ -32,6 +34,13 @@ export class DetailedPlantComponent implements OnInit {
     this.router.navigate(['/plants', id, 'form'], {
       relativeTo: this.route,
       queryParams: { test: '1' },
+    });
+  }
+
+  public deletePlant(id: number | null): void {
+    this.plantService.deletePlant(id).subscribe((res) => {
+      console.log(res);
+      this.router.navigate(['/plants'],{});
     });
   }
 

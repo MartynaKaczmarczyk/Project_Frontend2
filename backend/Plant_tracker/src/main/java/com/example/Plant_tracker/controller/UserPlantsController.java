@@ -2,12 +2,6 @@
 
 package com.example.Plant_tracker.controller;
 
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,7 +14,7 @@ import com.example.Plant_tracker.models.AppUser;
 import com.example.Plant_tracker.models.UserPlant;
 import com.example.Plant_tracker.models.Species;
 
-
+import java.util.Optional;
 import java.util.List;
 
 
@@ -40,9 +34,21 @@ public class UserPlantsController {
         return userPlantManager.getAllPlants();
     }
 
-    @GetMapping("/{userId}")
+    @GetMapping("/allUsersPlants/{userId}")
     public List<UserPlant> getAllUserPlants(@PathVariable Long userId) {
         return userPlantManager.getAllUserPlants(userId);
+    }
+
+    @GetMapping("/{plantId}")
+    public ResponseEntity<UserPlant> getPlantById(@PathVariable Long plantId) {
+        Optional<UserPlant> plant = userPlantManager.getPlantById(plantId);
+
+        if (plant.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                                 .body(null);  
+        }
+
+        return ResponseEntity.ok(plant.get());
     }
 
     //Przykład: http://localhost:8080/plants/filter/123/1,2,3
@@ -71,14 +77,12 @@ public class UserPlantsController {
     }
 
     //http://localhost:8080/plants/{userId}/{plantId}
-    @DeleteMapping("/{userId}/{plantId}")
-    public ResponseEntity<String> deletePlant(@PathVariable Long userId, @PathVariable Long plantId){
-        String response = userPlantManager.deletePlant(userId, plantId);
+    @DeleteMapping("/{plantId}")
+    public ResponseEntity<String> deletePlant(@PathVariable Long plantId){
+    System.out.println(plantId + "iddd");
+        String response = userPlantManager.deletePlant(plantId);
         if (response.equals("Plant not found")) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Plant not found");
-        }
-        if (response.equals("You are not authorized to delete this plant")) {
-            return ResponseEntity.status(HttpStatus.FORBIDDEN).body("You are not authorized to delete this plant");
         }
         return ResponseEntity.ok("Plant successfully deleted");
     }

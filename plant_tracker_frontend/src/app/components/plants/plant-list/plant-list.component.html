@@ -2,6 +2,7 @@
     <ul>
       @for (plant of plants; track plant.id) {
         <li>
+          {{plant.id}}
           <strong>{{ plant.name }}</strong> - {{ plant.species?.name }}
           <button (click)="goToDetails(plant.id)">Details</button>
           <button (click)="deletePlant(plant.id)">Delete</button>
