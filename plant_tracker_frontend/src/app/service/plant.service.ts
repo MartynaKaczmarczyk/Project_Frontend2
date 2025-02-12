@@ -23,9 +23,10 @@ export class PlantService{
     const headers = new HttpHeaders({
       Authorization: this.authHeader,
     });
-
+    console.log(plant, "WYSYŁANIE");
+    
     return this.httpClient.post<Plant>(
-      'http://localhost:8080/plants',
+      'http://localhost:8080/plants/46',
       plant,
       {headers}
     ).pipe(

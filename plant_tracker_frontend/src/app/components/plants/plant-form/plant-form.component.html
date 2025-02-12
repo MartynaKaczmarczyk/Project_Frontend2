@@ -13,9 +13,19 @@
     <label for="lastWatered">Last Watered</label>
     <input type="date" id="lastWatered" formControlName="lastWatered" />
   
-    <label for="created">Created</label>
-    <input type="date" id="created" formControlName="created" />
-  
+    <div>
+      <label for="Event">Event</label>
+      <button (click)="addEvent()">+</button>
+
+      @for (event of event.controls; track $index) {
+        <div [formGroup]="event">
+          <input type="text" formControlName="type" placeholder="type">
+          <input type="date" formControlName="date" placeholder="date">
+          <button (click)="deleteEvent($index)">-</button>
+        </div>
+      }
+    </div>
+
     <button type="submit" (click)="saveForm()" [disabled]="plantForm.invalid">Submit</button>
   </form>
   
