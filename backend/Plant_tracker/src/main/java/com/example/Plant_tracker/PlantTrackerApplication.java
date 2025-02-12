@@ -5,7 +5,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.context.annotation.Bean;
 import org.springframework.boot.CommandLineRunner;
-import com.example.Plant_tracker.server.CreateDataSql; 
+// import com.example.Plant_tracker.server.CreateDataSql; 
 
 
 
