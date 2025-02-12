@@ -5,12 +5,12 @@ import { Species } from './species.model';
 
 export interface Plant {
     readonly id: number | null,
-    readonly name: string,
-    readonly description: string,
+    readonly name: string | null,
+    readonly description: string | null,
 
-    readonly species: Species,
-    readonly lastWatered: Date,
-    readonly created: Date,
+    readonly species: Species | null,
+    readonly lastWatered: Date | null,
+    readonly created: Date | null,
 }
 
 export interface PlantForm {

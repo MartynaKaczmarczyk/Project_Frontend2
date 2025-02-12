@@ -1,5 +1,18 @@
-p {
+nav {
     background-color: #006A4E;
     color: white;
-    padding: 20px;
+    display: flex;
+    height: 50px;
+}
+
+button {
+    border: none;
+    color: white;
+    background-color: #006A4E;
+    margin-right: 20px;
+    padding: 10px;
+}
+
+button:hover {
+    background-color: #1B4D3E;
 }

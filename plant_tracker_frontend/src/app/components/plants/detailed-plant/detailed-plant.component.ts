@@ -1,12 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { RouterModule, ActivatedRoute, Router } from '@angular/router';
 import { PlantService } from '../../../service/plant.service';
 import { Plant } from '../../../models/plant.model';
 
 @Component({
   selector: 'app-detailed-plant',
   standalone: true,
-  imports: [],
+  imports: [RouterModule],
   templateUrl: './detailed-plant.component.html',
   styleUrl: './detailed-plant.component.scss'
 })
@@ -16,7 +16,8 @@ export class DetailedPlantComponent implements OnInit {
 
   public constructor(
     private plantService: PlantService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private router: Router
   ) {}
 
   public ngOnInit(): void {
@@ -25,5 +26,14 @@ export class DetailedPlantComponent implements OnInit {
       this.plant = this.plantService.getPlantById(plantId);
     });
   }
+
+
+  public goToEditForm(id: number | null): void {
+    this.router.navigate(['/plants', id, 'form'], {
+      relativeTo: this.route,
+      queryParams: { test: '1' },
+    });
+  }
+
 
 }

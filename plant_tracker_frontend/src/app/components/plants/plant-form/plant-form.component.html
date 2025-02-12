@@ -1,1 +1,21 @@
-<p>plant-form works!</p>
+<form [formGroup]="plantForm">
+    <label for="name">Name</label>
+    <input id="name" formControlName="name" />
+  
+    <label for="description">Description</label>
+    <input id="description" formControlName="description" />
+  
+    <!-- <label for="species">Species</label>
+    <select id="species" formControlName="species">
+      <option *ngFor="let species of speciesList" [ngValue]="species">{{ species.name }}</option>
+    </select> -->
+  
+    <label for="lastWatered">Last Watered</label>
+    <input type="date" id="lastWatered" formControlName="lastWatered" />
+  
+    <label for="created">Created</label>
+    <input type="date" id="created" formControlName="created" />
+  
+    <button type="submit" (click)="saveForm()" [disabled]="plantForm.invalid">Submit</button>
+  </form>
+  
