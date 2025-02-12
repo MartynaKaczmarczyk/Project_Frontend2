@@ -16,4 +16,8 @@ export interface Plant {
 export interface PlantForm {
   readonly id: FormControl<number | null>;
   readonly name: FormControl<string | null>;
+  readonly description: FormControl<string | null>;
+  readonly species: FormControl<Species | null>;
+  readonly lastWatered: FormControl<Date | null>;
+  readonly created: FormControl<Date | null>;
 }

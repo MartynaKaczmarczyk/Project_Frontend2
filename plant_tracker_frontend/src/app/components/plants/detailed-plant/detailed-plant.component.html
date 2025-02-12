@@ -1,1 +1,11 @@
-<p>detailed-plant works!</p>
+@if (plant) {
+    <h2>{{ plant.name }}</h2>
+    <p><strong>Species:</strong> {{ plant.species.name }}</p>
+    <p><strong>Description:</strong> {{ plant.description }}</p>
+    <p><strong>Last watered:</strong> {{ plant.lastWatered }}</p>
+    <p><strong>Created:</strong> {{ plant.created }}</p>
+
+} @else {
+    <p>Roślina o podanym ID nie została znaleziona.</p>
+  }
+  

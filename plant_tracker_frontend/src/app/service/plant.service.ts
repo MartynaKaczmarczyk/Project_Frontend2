@@ -1,44 +1,53 @@
-import { Injectable, OnInit } from '@angular/core';
+import { Injectable } from '@angular/core';
+import { Plant } from '../models/plant.model';
 
 @Injectable({
   providedIn: 'root'
 })
-export class PlantService implements OnInit{
+export class PlantService{
 
-  constructor() {}
-  // booksList: Book[] = [];
+  public plantsList: Plant[] = [];
 
-  ngOnInit(): void {
-    console.log("LifeCycy;e");
-    // this.loadBooks();
+  // ngOnInit(): void {
+  //   console.log("LifeCycy;e");
+  //   // this.loadBooks();
+  // }
+
+  public addPlant(plant: Plant): void {
+    const plants: Plant[] = []; //JSON.parse(localStorage.getItem('books') || '[]');
+    plants.push(plant);
+    //localStorage.setItem('books', JSON.stringify(plants));
+    console.log('roślina zapisana:', plant);
+    this.loadPlants();
   }
 
-  // addBook(book: Book) {
-  //   const books: Book[] = JSON.parse(localStorage.getItem('books') || '[]');
-  //   books.push(book);
-  //   localStorage.setItem('books', JSON.stringify(books));
-  //   console.log('Book zapisana:', book);
-  //   this.loadBooks();
-  // }
+  public loadPlants(): Plant[] {
+    const plants: Plant[] = [{
+      id: 2,
+      name: 'Fikus',
+      description: 'Popularna roślina domowa.',
+      species: {id:3, name: "Tropical"},
+      lastWatered: new Date(),
+      created: new Date()
+    }]; //JSON.parse(localStorage.getItem('books') || '[]');
+    this.plantsList = plants;
+    
+    return plants;
+  }
 
-  // loadBooks(): Book[] {
-  //   const books: Book[] = JSON.parse(localStorage.getItem('books') || '[]');
-  //   this.booksList = books;
-  //   return books;
-  // }
-
-  // getBookById(id: string): Book | undefined {
-  //   const books: Book[] = JSON.parse(localStorage.getItem('books') || '[]');
-  //   return books.find((book) => book.id === id);
-  // }
+  public getPlantById(id: number): Plant | undefined {
+    //const plants: Book[] = //JSON.parse(localStorage.getItem('books') || '[]');
+    return this.plantsList.find((plant) => plant.id === id);
+  }
 
 
-  // deleteBook(id: string | null): void {
-  //   if (!id) return;
-
-  //   const books: Book[] = JSON.parse(localStorage.getItem('books') || '[]');
-  //   const updatedBooks = books.filter((book) => book.id !== id);
-  //   localStorage.setItem('books', JSON.stringify(updatedBooks));
-  //   this.booksList = updatedBooks;
-  // }
+  public deletePlant(id: number | null): void {
+    console.log(id);
+    if (!id) return;
+    const plants: Plant[] = []; //JSON.parse(localStorage.getItem('books') || '[]');
+    const updatedPlants = plants.filter((plant) => plant.id !== id);
+    //localStorage.setItem('books', JSON.stringify(updatedBooks));
+    this.plantsList = updatedPlants;
+    console.log(this.plantsList);
+  }
 }

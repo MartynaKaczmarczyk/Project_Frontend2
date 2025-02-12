@@ -3,7 +3,7 @@ import {
 } from '@angular/forms';
 
 export interface Species {
-    readonly id: string | null,
+    readonly id: number | null,
     readonly name: string,
 }
 
