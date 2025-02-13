@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Plant } from '../models/plant.model';
 import { Observable } from 'rxjs';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Species } from '../models/species.model';
 import { catchError } from 'rxjs/operators';
 import { throwError } from 'rxjs';
@@ -149,6 +149,28 @@ export class PlantService {
     return this.httpClient.get<Plant[]>(
       `http://localhost:8080/plants/filter/${userId}/${speciesNames.join(',')}`,
       { headers}).pipe(
+      catchError((error) => {
+        console.error('Error occurred while filtering plants by checkboxes:', error);
+            
+        return throwError(() => new Error('Failed to filter plants, please try again later.'));
+      })
+    );
+  }
+
+
+  public sortByLastWateredDiate(userId: number, sortOrder: string): Observable<Plant[]> {
+    const params = new HttpParams().set('sortOrder', sortOrder);
+    const headers = new HttpHeaders({
+      Authorization: this.authHeader,
+    });
+
+    return this.httpClient.get<Plant[]>(
+      `http://localhost:8080/plants/plants/${userId}/}`,
+      {
+        params: params,   
+        headers: headers, 
+      }
+    ).pipe(
       catchError((error) => {
         console.error('Error occurred while filtering plants by checkboxes:', error);
             

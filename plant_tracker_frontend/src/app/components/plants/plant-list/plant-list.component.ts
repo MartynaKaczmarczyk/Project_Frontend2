@@ -20,6 +20,7 @@ export class PlantListComponent implements OnInit {
   private searchBy: number = Number(localStorage.getItem('userId')) || 0;
   public species: Species[] = [];
   public selectedSpecies: string[] = [];
+  public sortOrder: string = 'asc';
 
   public constructor(
     private plantService: PlantService,
@@ -102,5 +103,21 @@ export class PlantListComponent implements OnInit {
       console.log('No filters applied');
       this.loadPlants();
     }
+  }
+
+  public toggleSortOrder(): void {
+    this.sortOrder = this.sortOrder === 'asc' ? 'desc' : 'asc';
+    this.sortByLastWatered();  
+  }
+
+  public sortByLastWatered(): void {
+    this.plantService.sortByLastWateredDate(this.searchBy, this.sortOrder).subscribe(
+      (data) => {
+        this.plants = data;
+      },
+      (error) => {
+        console.error('Błąd podczas pobierania roślin', error);
+      }
+    );
   }
 }

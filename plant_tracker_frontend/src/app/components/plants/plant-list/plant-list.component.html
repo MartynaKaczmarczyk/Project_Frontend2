@@ -1,3 +1,4 @@
+
 <div>
   <div>Search bar</div>
   <input 
@@ -27,6 +28,11 @@
   <button (click)="filterBySpecies()">Apply Filters</button>
 </div>
 
+<div>
+  <button (click)="toggleSortOrder()">
+    Zmień kolejność sortowania (Aktualna: {{ sortOrder }})
+  </button>
+</div>
 @if (plants.length > 0) {
     <ul>
       @for (plant of plants; track plant.id) {
