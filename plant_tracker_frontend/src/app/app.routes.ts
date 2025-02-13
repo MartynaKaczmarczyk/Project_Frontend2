@@ -1,6 +1,6 @@
 import { Routes } from '@angular/router';
 import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
-// import { InfoComponent } from './components/info/info.component';
+import { LoginComponent } from './components/auth/login/login.component';
 
 export const routes: Routes = [
 
@@ -14,11 +14,8 @@ export const routes: Routes = [
     loadChildren: () => import('./components/plants/plants.routes')
       .then((res) => res.PLANTS_ROUTES)
   },
-//   {
-//     path: 'info',
-//     component: InfoComponent,
-//   },
 
+  { path: 'login', component: LoginComponent },
   { path: '**', component: PageNotFoundComponent }
     
 

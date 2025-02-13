@@ -43,6 +43,6 @@ export class LoginComponent {
 
     localStorage.setItem('authHeader', authHeader);
 
-    this.router.navigate(['/home']);
+    this.router.navigate(['/']);
   }
 }
