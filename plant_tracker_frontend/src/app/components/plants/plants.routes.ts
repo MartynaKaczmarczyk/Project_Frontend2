@@ -2,7 +2,7 @@ import { Routes } from '@angular/router';
 import { PlantListComponent } from './plant-list/plant-list.component';
 import { DetailedPlantComponent } from './detailed-plant/detailed-plant.component';
 import { PlantFormComponent } from './plant-form/plant-form.component';
-import { unsavedChangesGuard } from '../../guards/unsaved-changes.guard';
+import { unsavedChangesGuard } from '../../guards/unsavedChangesGuard/unsaved-changes.guard';
 
 export const PLANTS_ROUTES: Routes = [
   {

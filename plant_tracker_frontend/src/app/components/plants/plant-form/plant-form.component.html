@@ -7,7 +7,9 @@
   
     <label for="species">Species</label>
     <select id="species" formControlName="species">
-      <option *ngFor="let species of species" [ngValue]="species">{{ species.name }}</option>
+      @for (species of species; ; track $index) {
+        <option value="species">{{ species.name }}</option>
+      }
     </select>
   
     <label for="lastWatered">Last Watered</label>
