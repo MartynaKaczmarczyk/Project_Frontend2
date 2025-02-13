@@ -138,4 +138,22 @@ export class PlantService {
       })
     );
   }
+
+  
+
+  public filterBySpecies(userId: number, speciesNames: string[] ): Observable<Plant[]>{
+    const headers = new HttpHeaders({
+      Authorization: this.authHeader,
+    });
+
+    return this.httpClient.get<Plant[]>(
+      `http://localhost:8080/plants/filter/${userId}/${speciesNames.join(',')}`,
+      { headers}).pipe(
+      catchError((error) => {
+        console.error('Error occurred while filtering plants by checkboxes:', error);
+            
+        return throwError(() => new Error('Failed to filter plants, please try again later.'));
+      })
+    );
+  }
 }

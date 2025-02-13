@@ -1,15 +1,31 @@
 <div>
+  <div>Search bar</div>
   <input 
   type="text" 
   [(ngModel)]="searchTerm" 
-  (input)="searchPlants(searchBy)" 
+  (input)="searchPlants()" 
   placeholder="Szukaj po gatunku..." 
   />
   <button (click)="loadPlants()">Reset filter</button>
 
 </div>
 
-
+<div>
+  <div>Search by checkbox</div>
+  @for (species of species; track species.id) {
+    <div>
+      <input 
+      type="checkbox" 
+      [id]="species.id" 
+      [value]="species.name" 
+      (change)="onSpeciesChange($event)" 
+    />
+    <label [for]="species.id">{{ species.name }}</label>
+    </div>
+  }
+  
+  <button (click)="filterBySpecies()">Apply Filters</button>
+</div>
 
 @if (plants.length > 0) {
     <ul>

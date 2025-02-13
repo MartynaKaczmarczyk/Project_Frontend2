@@ -4,6 +4,7 @@ import { PlantService } from '../../../service/plant.service';
 import { RouterModule, Router, ActivatedRoute } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { Species } from '../../../models/species.model';
 
 @Component({
   selector: 'app-plant-list',
@@ -16,7 +17,9 @@ export class PlantListComponent implements OnInit {
   public plants: Plant[] = [];
   public errorMessage: string = '';
   public searchTerm : string = '';
-  public searchBy: number = Number(localStorage.getItem('userId')) || 0;
+  private searchBy: number = Number(localStorage.getItem('userId')) || 0;
+  public species: Species[] = [];
+  public selectedSpecies: string[] = [];
 
   public constructor(
     private plantService: PlantService,
@@ -26,6 +29,9 @@ export class PlantListComponent implements OnInit {
 
   public ngOnInit(): void {
     this.loadPlants();
+    this.plantService.loadSpecies().subscribe((data) => {
+      this.species = data;  
+    });
   }
 
   public loadPlants(): void {
@@ -63,14 +69,38 @@ export class PlantListComponent implements OnInit {
   }
 
 
-  public searchPlants(userId: number): void {
+  public searchPlants(): void {
     if (this.searchTerm.length > 1) {
-      this.plantService.searchPlantsBySpecies(userId, this.searchTerm)
+      this.plantService.searchPlantsBySpecies(this.searchBy, this.searchTerm)
         .subscribe((response) => {
           this.plants = response;
         }, (error) => {
           console.error('Błąd pobierania roślin:', error);
         });
+    }
+  }
+
+  public onSpeciesChange(event: Event): void {
+    const checkbox = event.target as HTMLInputElement;
+    if (checkbox.checked) {
+      this.selectedSpecies.push(checkbox.value);  
+    } else {
+      const index = this.selectedSpecies.indexOf(checkbox.value);
+      if (index > -1) {
+        this.selectedSpecies.splice(index, 1);  
+      }
+    }
+  }
+
+  public filterBySpecies(): void {
+    if (this.selectedSpecies.length > 0) {
+      this.plantService.filterBySpecies(this.searchBy, this.selectedSpecies).subscribe((plants) => {
+        console.log('Filtered plants:', plants);
+        this.plants = plants;      
+      });
+    } else {
+      console.log('No filters applied');
+      this.loadPlants();
     }
   }
 }
