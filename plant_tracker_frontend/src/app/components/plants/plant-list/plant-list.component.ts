@@ -3,17 +3,20 @@ import { Plant } from '../../../models/plant.model';
 import { PlantService } from '../../../service/plant.service';
 import { RouterModule, Router, ActivatedRoute } from '@angular/router';
 import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-plant-list',
   standalone: true,
-  imports: [CommonModule, RouterModule],
+  imports: [CommonModule, RouterModule, FormsModule],
   templateUrl: './plant-list.component.html',
   styleUrl: './plant-list.component.scss'
 })
 export class PlantListComponent implements OnInit {
   public plants: Plant[] = [];
   public errorMessage: string = '';
+  public searchTerm : string = '';
+  public searchBy: number = Number(localStorage.getItem('userId')) || 0;
 
   public constructor(
     private plantService: PlantService,
@@ -25,11 +28,12 @@ export class PlantListComponent implements OnInit {
     this.loadPlants();
   }
 
-  private loadPlants(): void {
+  public loadPlants(): void {
     this.plantService.loadPlants().subscribe(
       (res) => {
         console.log(res);
         this.plants = res;
+        this.searchTerm = '';
       },
       (error) => {
         console.error('Error loading plants:', error);
@@ -56,5 +60,17 @@ export class PlantListComponent implements OnInit {
         this.errorMessage = `Failed to delete plant with ID ${id}, please try again later.`;
       }
     );
+  }
+
+
+  public searchPlants(userId: number): void {
+    if (this.searchTerm.length > 1) {
+      this.plantService.searchPlantsBySpecies(userId, this.searchTerm)
+        .subscribe((response) => {
+          this.plants = response;
+        }, (error) => {
+          console.error('Błąd pobierania roślin:', error);
+        });
+    }
   }
 }

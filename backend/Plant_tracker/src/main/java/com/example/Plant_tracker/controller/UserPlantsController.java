@@ -106,7 +106,7 @@ public class UserPlantsController {
 
     @GetMapping("/search/{userId}")
     public List<UserPlant> getPlantsByNamePrefix(@PathVariable Long userId, @RequestParam String prefix) {
-        return userPlantManager.getPlantsByNameRegex(userId, prefix);
+        return userPlantManager.getPlantsByNameRegex(prefix, userId);
     }
 
     

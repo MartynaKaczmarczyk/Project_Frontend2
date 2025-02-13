@@ -145,8 +145,11 @@ public class UserPlantManager {
         return "Plant updated successfully";
     }
 
-    public List<UserPlant> getPlantsByNameRegex(Long userId, String prefix) {
-        return userPlantRepository.findByNameStartingWithIgnoreCaseAndUser_Id(prefix, userId);
+    public List<UserPlant> getPlantsByNameRegex(String prefix, Long userId) {
+        System.out.println("FFFF"+prefix+"FFFF"+ userId);
+        System.out.println("FFFF"+userPlantRepository.findByNameContainingIgnoreCaseAndUser_Id(prefix, userId)+"FFFF");
+
+        return userPlantRepository.findByNameContainingIgnoreCaseAndUser_Id(prefix, userId);
     }
 
     

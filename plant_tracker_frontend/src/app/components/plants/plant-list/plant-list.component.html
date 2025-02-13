@@ -1,3 +1,16 @@
+<div>
+  <input 
+  type="text" 
+  [(ngModel)]="searchTerm" 
+  (input)="searchPlants(searchBy)" 
+  placeholder="Szukaj po gatunku..." 
+  />
+  <button (click)="loadPlants()">Reset filter</button>
+
+</div>
+
+
+
 @if (plants.length > 0) {
     <ul>
       @for (plant of plants; track plant.id) {

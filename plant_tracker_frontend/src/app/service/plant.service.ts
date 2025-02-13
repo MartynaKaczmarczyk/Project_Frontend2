@@ -121,4 +121,21 @@ export class PlantService {
       })
     );
   }
+
+
+  public searchPlantsBySpecies(userId: number, prefix: string): Observable<Plant[]> {
+    const headers = new HttpHeaders({
+      Authorization: this.authHeader,
+    });
+
+    return this.httpClient.get<Plant[]>(
+      `http://localhost:8080/plants/search/${userId}?prefix=${prefix}`, 
+      { headers}).pipe(
+      catchError((error) => {
+        console.error('Error occurred while searching plant by prefix:', error);
+          
+        return throwError(() => new Error('Failed to search plants, please try again later.'));
+      })
+    );
+  }
 }
