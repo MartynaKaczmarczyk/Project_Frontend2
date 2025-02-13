@@ -129,6 +129,17 @@ public class UserPlantManager {
         Optional.ofNullable(updatedPlantData.getSpecies())
             .ifPresent(plant::setSpecies);
 
+            Optional.ofNullable(updatedPlantData.getLastEvents())
+            .ifPresent(newEvents -> {
+                List<Event> eventsToAdd = new ArrayList<>(newEvents);
+        
+                // Dodaj każde zdarzenie do listy rośliny
+                for (Event newEvent : eventsToAdd) {
+                    newEvent.setPlant(plant);  // Ustawiamy roślinę dla zdarzenia
+                    plant.getLastEvents().add(newEvent);  // Dodajemy zdarzenie do listy rośliny
+                }
+                plant.setLastEvents(eventsToAdd);  // Ustawiamy nową listę zdarzeń
+            });
 
         userPlantRepository.save(plant);
         return "Plant updated successfully";
