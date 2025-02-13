@@ -1,4 +1,9 @@
 <nav>
-    <button (click)="goToPlantsList()"> Plant List </button>
-    <button (click)="goToAddPlantForm()"> Add Plant</button>
+    @if (!isLoggedIn) {
+        <div> Hello, please log in</div>
+    } @else {
+        <button (click)="goToPlantsList()"> Plant List </button>
+        <button (click)="goToAddPlantForm()"> Add Plant</button>
+        <button (click)="logout()">Wyloguj</button>
+    }
 </nav>

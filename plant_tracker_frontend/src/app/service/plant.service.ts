@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Plant } from '../models/plant.model';
 import { Observable } from 'rxjs';
-import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Species } from '../models/species.model';
 import { catchError } from 'rxjs/operators';
 import { throwError } from 'rxjs';
@@ -14,11 +14,9 @@ export class PlantService{
   private constructor(private httpClient: HttpClient) {}
 
   public plantsList: Plant[] = [];
-  public username = 'john.doe@example.com'; 
-  public password = 'password123'; 
-  public authHeader = 'Basic ' + btoa(`${this.username}:${this.password}`);
-  
+  public authHeader: string = localStorage.getItem('authHeader') || '';  
 
+  
   public addPlant(plant: Plant): Observable<string> {
     const headers = new HttpHeaders({
       Authorization: this.authHeader,

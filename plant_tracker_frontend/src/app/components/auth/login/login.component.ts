@@ -8,6 +8,7 @@ import {
 import {  RouterModule, Router } from '@angular/router';
 import { LoginForm } from '../../../models/loginForm.model';
 import { CommonModule } from '@angular/common';
+import { AuthService } from '../../../service/authService/auth.service';
 
 @Component({
   selector: 'app-login',
@@ -20,7 +21,8 @@ export class LoginComponent {
   public errorMessage: string = '';
 
   public constructor(
-    private router: Router 
+    private router: Router,
+    private authService: AuthService
   ) {}
 
   public loginForm: FormGroup<LoginForm> = new FormGroup<LoginForm>(
@@ -41,7 +43,7 @@ export class LoginComponent {
     const password: string | null = this.loginForm.getRawValue().password;
     const authHeader = 'Basic ' + btoa(`${username}:${password}`);
 
-    localStorage.setItem('authHeader', authHeader);
+    this.authService.login(authHeader);
 
     this.router.navigate(['/']);
   }

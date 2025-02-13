@@ -2,7 +2,7 @@
     <h2>Logowanie</h2>
   
     <form [formGroup]="loginForm" (ngSubmit)="login()">
-      <!-- Pole Email -->
+      
       <div class="form-group">
         <label for="username">Email:</label>
         <input 
@@ -12,13 +12,18 @@
           class="form-control"
           [class.invalid]="loginForm.controls.username.invalid && loginForm.controls.username.touched"
         />
-        <div class="error-message" *ngIf="loginForm.controls.username.invalid && loginForm.controls.username.touched">
-          <small *ngIf="loginForm.controls.username.errors?.['required']">Email jest wymagany.</small>
-          <small *ngIf="loginForm.controls.username.errors?.['email']">Podaj poprawny adres email.</small>
+        @if (loginForm.controls.username.invalid && loginForm.controls.username.touched) {
+        <div class="error-message">
+          @if (loginForm.controls.username.errors?.['required']) {
+            <small>Email jest wymagany.</small>
+          }
+          @if (loginForm.controls.username.errors?.['email']) {
+            <small>Podaj poprawny adres email.</small>
+          }
         </div>
+         }
       </div>
   
-      <!-- Pole Hasło -->
       <div class="form-group">
         <label for="password">Hasło:</label>
         <input 
@@ -28,14 +33,19 @@
           class="form-control"
           [class.invalid]="loginForm.controls.password.invalid && loginForm.controls.password.touched"
         />
-        <div class="error-message" *ngIf="loginForm.controls.password.invalid && loginForm.controls.password.touched">
-          <small *ngIf="loginForm.controls.password.errors?.['required']">Hasło jest wymagane.</small>
+        @if (loginForm.controls.password.invalid && loginForm.controls.password.touched) {
+        <div class="error-message">
+          @if (loginForm.controls.password.errors?.['required']) {
+            <small>Hasło jest wymagane.</small>
+          }
         </div>
+       }
       </div>
-  
-      <div class="error-message" *ngIf="errorMessage">
-        <p>{{ errorMessage }}</p>
-      </div>
+      @if (errorMessage) {
+        <div class="error-message">
+          <p>{{ errorMessage }}</p>
+        </div>
+      }
   
       <button type="submit" class="btn-login" [disabled]="loginForm.invalid">Zaloguj</button>
     </form>
