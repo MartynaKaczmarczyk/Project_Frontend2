@@ -41,10 +41,19 @@ export class LoginComponent {
 
     const username: string | null = this.loginForm.getRawValue().username;
     const password: string | null = this.loginForm.getRawValue().password;
-    const authHeader = 'Basic ' + btoa(`${username}:${password}`);
+    this.authService.login(username, password).subscribe({
+      next: (res) => {
+        this.authService.isLoggedInSubject.next(true);
+        console.log(res);
+        localStorage.setItem('userId', res);
+        localStorage.setItem('authHeader', 'Basic ' + btoa(`${username}:${password}`));
+        this.router.navigate(['/']);
+      },
+      error: (err) => {
+        this.errorMessage = 'Login failed. Check your credentials.';
+        console.error('Login error:', err);
+      }
+    });
 
-    this.authService.login(authHeader);
-
-    this.router.navigate(['/']);
   }
 }

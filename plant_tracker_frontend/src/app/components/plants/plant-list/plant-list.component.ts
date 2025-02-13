@@ -11,8 +11,9 @@ import { CommonModule } from '@angular/common';
   templateUrl: './plant-list.component.html',
   styleUrl: './plant-list.component.scss'
 })
-export class PlantListComponent implements OnInit{
+export class PlantListComponent implements OnInit {
   public plants: Plant[] = [];
+  public errorMessage: string = '';
 
   public constructor(
     private plantService: PlantService,
@@ -25,11 +26,16 @@ export class PlantListComponent implements OnInit{
   }
 
   private loadPlants(): void {
-    this.plantService.loadPlants().subscribe((res) => {
-      console.log(res);
-      this.plants = res;
-    });
-
+    this.plantService.loadPlants().subscribe(
+      (res) => {
+        console.log(res);
+        this.plants = res;
+      },
+      (error) => {
+        console.error('Error loading plants:', error);
+        this.errorMessage = 'Failed to load plants, please try again later.';
+      }
+    );
   }
 
   public goToDetails(id: number | null): void {
@@ -40,12 +46,15 @@ export class PlantListComponent implements OnInit{
   }
 
   public deletePlant(id: number | null): void {
-    this.plantService.deletePlant(id).subscribe((res) => {
-      console.log(res);
-      this.loadPlants(); 
-    });
+    this.plantService.deletePlant(id).subscribe(
+      (res) => {
+        console.log(res);
+        this.loadPlants(); 
+      },
+      (error) => {
+        console.error(`Error deleting plant with ID ${id}:`, error);
+        this.errorMessage = `Failed to delete plant with ID ${id}, please try again later.`;
+      }
+    );
   }
-
-
-
 }

@@ -80,7 +80,7 @@ export class PlantFormComponent implements OnInit {
           created: plant.created,
           events: []
         });
-        console.log(plant.lastEvents, "GGGGGG" );
+        console.log(plant.species, "GGGGGG" );
         
         plant.lastEvents.forEach((event) => {
           console.log(event, "EVVVENT");
@@ -122,6 +122,7 @@ export class PlantFormComponent implements OnInit {
 
 
   public saveForm(): void {
+    console.log("saveForm() wywołane!");
     if (this.plantForm.valid) {
       const plant: Plant = { 
         ...this.plantForm.getRawValue(),

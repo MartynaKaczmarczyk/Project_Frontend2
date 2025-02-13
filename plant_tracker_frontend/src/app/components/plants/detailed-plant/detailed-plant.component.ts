@@ -13,6 +13,7 @@ import { Plant } from '../../../models/plant.model';
 export class DetailedPlantComponent implements OnInit {
 
   public plant: Plant | undefined;
+  public errorMessage: string = '';
 
   public constructor(
     private plantService: PlantService,
@@ -23,12 +24,17 @@ export class DetailedPlantComponent implements OnInit {
   public ngOnInit(): void {
     this.route.params.subscribe((params) => {
       const plantId: number = Number(params['id']);
-      this.plantService.getPlantById(plantId).subscribe((res) => {
-        this.plant = res;
-      });
+      this.plantService.getPlantById(plantId).subscribe(
+        (res) => {
+          this.plant = res;
+        },
+        (error) => {
+          console.error(`Error occurred while fetching plant with ID ${plantId}:`, error);
+          this.errorMessage = `Failed to load plant details, please try again later.`;
+        }
+      );
     });
   }
-
 
   public goToEditForm(id: number | null): void {
     this.router.navigate(['/plants', id, 'form'], {
@@ -38,11 +44,15 @@ export class DetailedPlantComponent implements OnInit {
   }
 
   public deletePlant(id: number | null): void {
-    this.plantService.deletePlant(id).subscribe((res) => {
-      console.log(res);
-      this.router.navigate(['/plants'],{});
-    });
+    this.plantService.deletePlant(id).subscribe(
+      (res) => {
+        console.log(res);
+        this.router.navigate(['/plants'], {});
+      },
+      (error) => {
+        console.error(`Error occurred while deleting plant with ID ${id}:`, error);
+        this.errorMessage = `Failed to delete plant with ID ${id}, please try again later.`;
+      }
+    );
   }
-
-
 }

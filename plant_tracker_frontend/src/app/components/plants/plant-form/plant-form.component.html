@@ -7,9 +7,7 @@
   
     <label for="species">Species</label>
     <select id="species" formControlName="species">
-      @for (species of species; ; track $index) {
-        <option value="species">{{ species.name }}</option>
-      }
+      <option *ngFor="let species of species" [ngValue]="species">{{ species.name }}</option>
     </select>
   
     <label for="lastWatered">Last Watered</label>
@@ -28,6 +26,6 @@
       }
     </div>
 
-    <button type="submit" (click)="saveForm()" [disabled]="plantForm.invalid">Submit</button>
+    <button (click)="saveForm()" [disabled]="plantForm.invalid">Submit</button>
   </form>
   
