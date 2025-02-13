@@ -18,8 +18,16 @@
         </div>
     }
 
+    {{showModal}}
+    @if (showModal) {
+
+        <app-modal
+            (confirmAction)="onConfirmDelete()"
+            (cancelAction)="onCancelDelete()">
+        </app-modal>
+    }
     <button (click)="goToEditForm(plant.id)">Edit Plant</button>
-    <button (click)="deletePlant(plant.id)">Delete Plant</button>
+    <button (click)="onDeleteClick(plant.id)">Delete Plant</button>
 
 } @else {
     <p>Roślina o podanym ID nie została znaleziona.</p>

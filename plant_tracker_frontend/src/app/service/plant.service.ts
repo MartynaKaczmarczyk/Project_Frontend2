@@ -158,7 +158,7 @@ export class PlantService {
   }
 
 
-  public sortByLastWateredDiate(userId: number, sortOrder: string): Observable<Plant[]> {
+  public sortByLastWateredDate(userId: number, sortOrder: string): Observable<Plant[]> {
     const params = new HttpParams().set('sortOrder', sortOrder);
     const headers = new HttpHeaders({
       Authorization: this.authHeader,

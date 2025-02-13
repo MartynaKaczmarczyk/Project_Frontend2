@@ -2,11 +2,12 @@ import { Component, OnInit } from '@angular/core';
 import { RouterModule, ActivatedRoute, Router } from '@angular/router';
 import { PlantService } from '../../../service/plant.service';
 import { Plant } from '../../../models/plant.model';
+import { ModalComponent } from '../../modal/modal.component';
 
 @Component({
   selector: 'app-detailed-plant',
   standalone: true,
-  imports: [RouterModule],
+  imports: [RouterModule, ModalComponent],
   templateUrl: './detailed-plant.component.html',
   styleUrl: './detailed-plant.component.scss'
 })
@@ -14,6 +15,9 @@ export class DetailedPlantComponent implements OnInit {
 
   public plant: Plant | undefined;
   public errorMessage: string = '';
+  public showModal:boolean = false;
+  public selectedPlantId: number | null = null;
+
 
   public constructor(
     private plantService: PlantService,
@@ -43,6 +47,11 @@ export class DetailedPlantComponent implements OnInit {
     });
   }
 
+  public onDeleteClick(id: number | null): void {
+    this.selectedPlantId = id;
+    this.showModal = true; 
+  }
+
   public deletePlant(id: number | null): void {
     this.plantService.deletePlant(id).subscribe(
       (res) => {
@@ -54,5 +63,17 @@ export class DetailedPlantComponent implements OnInit {
         this.errorMessage = `Failed to delete plant with ID ${id}, please try again later.`;
       }
     );
+  }
+
+  public onConfirmDelete(): void {
+    if (this.selectedPlantId !== null) {
+      this.deletePlant(this.selectedPlantId);
+    }
+    this.showModal = false; 
+  }
+
+ 
+  public onCancelDelete(): void {
+    this.showModal = false; 
   }
 }
