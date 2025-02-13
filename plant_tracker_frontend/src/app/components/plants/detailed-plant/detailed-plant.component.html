@@ -12,7 +12,7 @@
                 @for (event of plant.lastEvents; track event.idEvent) {
                     <li>
                         <div>Type: {{event.type}}</div>
-                        <div>Date of occurance: getFormattedDate(event.date)</div>
+                        <div>Date of occurance: {{getFormattedDate(event.date)}}</div>
                     </li>
                 }
             </ul>
