@@ -1,10 +1,146 @@
-/* You can add global styles to this file, and also import other style files */
-body {
-    margin: 0;
-    padding: 0;
-    background-color: #ACE1AF;
+$primary-color: #4CAF50;
+$secondary-color: #388E3C;
+$background-color: #ACE1AF;
+$text-color: #333;
+$error-color: #D32F2F;
+$border-radius: 8px;
 
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background-color: $background-color;
+  font-family: 'Arial', sans-serif;
+  color: $text-color;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  width: 100%;
+}
+
+.navbar {
+  width: 100%;
+  background: $primary-color;
+  padding: 15px 20px;
+  color: white;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+
+  .logo {
+    font-size: 20px;
+    font-weight: bold;
+  }
+
+  .nav-links {
+    display: flex;
+    gap: 15px;
+
+    a {
+      color: white;
+      text-decoration: none;
+      font-weight: bold;
+      transition: color 0.3s ease-in-out;
+
+      &:hover {
+        color: darken(white, 10%);
+      }
+    }
+  }
+}
+
+.main-container {
+  flex-grow: 1;
+  width: 100%;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center; 
 }
 
 
+form {
+  width: 100%;
+  max-width: 600px;
+  background: white;
+  padding: 20px;
+  border-radius: $border-radius;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 
+  label {
+    font-weight: bold;
+  }
+
+  input,
+  select {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: $border-radius;
+    font-size: 16px;
+    transition: border 0.3s ease-in-out;
+
+    &:focus {
+      border-color: $primary-color;
+      outline: none;
+      box-shadow: 0 0 5px rgba($primary-color, 0.5);
+    }
+  }
+}
+
+
+.error-message {
+  color: $error-color;
+  font-size: 14px;
+  margin-top: -10px;
+}
+
+button {
+  background: $primary-color;
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  border-radius: $border-radius;
+  cursor: pointer;
+  transition: background 0.3s ease-in-out;
+
+  &:hover {
+    background: $secondary-color;
+  }
+
+  &:disabled {
+    background: #bbb;
+    cursor: not-allowed;
+  }
+}
+
+@media (max-width: 768px) {
+  .navbar {
+    flex-direction: column;
+    align-items: center;
+    padding: 10px;
+  }
+
+  .nav-links {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .main-container {
+    padding: 15px;
+  }
+
+  input,
+  select {
+    font-size: 14px;
+  }
+
+  button {
+    font-size: 14px;
+    padding: 8px;
+  }
+}
