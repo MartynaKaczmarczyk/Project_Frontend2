@@ -16,7 +16,7 @@ import com.example.Plant_tracker.models.Species;
 
 import java.util.Optional;
 import java.util.List;
-
+import org.springframework.data.domain.Sort;
 
 @RestController
 @RequestMapping("/plants")
@@ -109,6 +109,20 @@ public class UserPlantsController {
         return userPlantManager.getPlantsByNameRegex(prefix, userId);
     }
 
+    @GetMapping("/plants/{userId}")
+    public List<UserPlant> getSortedUserPlants(
+        @PathVariable Long userId,
+        @RequestParam(defaultValue = "asc") String sortOrder) {
+
+        Sort sort = Sort.by(Sort.Order.by("lastWatered"));
+    if ("desc".equalsIgnoreCase(sortOrder)) {
+        sort = sort.descending();
+    } else {
+        sort = sort.ascending();
+    }
+
+    return userPlantManager.getPlantsSortedByUserId(userId, sort);
+}
     
     
 

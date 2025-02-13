@@ -2,6 +2,7 @@ package com.example.Plant_tracker.repositories;
 
 import com.example.Plant_tracker.models.UserPlant;
 import com.example.Plant_tracker.models.Species;
+import org.springframework.data.domain.Sort;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -31,4 +32,7 @@ public interface UserPlantRepository extends JpaRepository<UserPlant, Long>  {
     // List<UserPlant> searchPlants(@Param("prefix") String prefix, @Param("userId") Long userId);
     List<UserPlant> findByNameContainingIgnoreCaseAndUser_Id(String name, Long userId);
 
+    boolean existsByNameAndUserId(String name, Long userId);
+
+    List<UserPlant> findByUserId(Long userId, Sort sort);
 }

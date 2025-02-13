@@ -26,7 +26,7 @@ public class AppUser implements UserDetails {
     private String password;
     private String email;
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "user")
     private List<UserPlant> userPlants = new ArrayList<>(); 
 
     // Implementacja metod z interfejsu UserDetails

@@ -25,6 +25,7 @@ public class DataInitializer implements CommandLineRunner {
     private final AppUserRepository appUserRepository;
     private final SpeciesRepository speciesRepository;
     private final UserPlantRepository userPlantRepository;
+
     @Autowired
     private PasswordEncoder passwordEncoder;
 
@@ -42,14 +43,14 @@ public class DataInitializer implements CommandLineRunner {
         String plantName1 = "Ficus Benjamin";
         String plantName2 = "Desert Cactus";
 
-        appUserRepository.deleteAll();   
-        speciesRepository.deleteAll();   
-        userPlantRepository.deleteAll(); 
+        // Czyszczenie danych (opcjonalne)
+        userPlantRepository.deleteAll();
+        speciesRepository.deleteAll();
+        appUserRepository.deleteAll();
 
         // Sprawdzanie, czy użytkownik już istnieje
-        Optional<AppUser> existingUser = appUserRepository.findByEmail(userEmail);
-        if (existingUser.isPresent()) {
-            System.out.println("User with email " + userEmail + " already exists. Skipping creation.");
+        if (appUserRepository.findByEmail(userEmail).isPresent()) {
+            System.out.println("User already exists. Skipping initialization.");
             return;
         }
 
@@ -57,53 +58,42 @@ public class DataInitializer implements CommandLineRunner {
         AppUser user = new AppUser();
         user.setName("John Doe");
         user.setEmail(userEmail);
-        user.setPassword("password123"); // W rzeczywistości hasła powinny być hashowane!
+        user.setPassword(passwordEncoder.encode("password123"));
+        
+        // **Najpierw zapisujemy użytkownika do bazy**
+        user = appUserRepository.save(user);
 
-        // Przygotowanie gatunków roślin
+        // Tworzenie lub pobranie gatunków roślin
         Species species1 = speciesRepository.findByName("Ficus")
-                .orElseGet(() -> {
-                    Species newSpecies = new Species();
-                    newSpecies.setName("Ficus");
-                    return speciesRepository.save(newSpecies);
-                });
+                .orElseGet(() -> speciesRepository.save(new Species("Ficus")));
 
         Species species2 = speciesRepository.findByName("Cactus")
-                .orElseGet(() -> {
-                    Species newSpecies = new Species();
-                    newSpecies.setName("Cactus");
-                    return speciesRepository.save(newSpecies);
-                });
+                .orElseGet(() -> speciesRepository.save(new Species("Cactus")));
 
-        // Sprawdzanie i tworzenie roślin
-        if (userPlantRepository.existsByName(plantName1)) {
-            System.out.println("Plant with name " + plantName1 + " already exists. Skipping creation.");
-        } else {
+        // **Tworzenie roślin, ale zapisywanie ich osobno**
+        if (!userPlantRepository.existsByName(plantName1)) {
             UserPlant plant1 = new UserPlant();
             plant1.setName(plantName1);
             plant1.setDescription("A lovely ficus.");
             plant1.setSpecies(species1);
             plant1.setLastWatered(LocalDateTime.now().minusDays(2));
             plant1.setCreated(LocalDateTime.now());
-            plant1.setUser(user); 
-            user.getUserPlants().add(plant1);
+            plant1.setUser(user);  
+            
+            userPlantRepository.save(plant1); // **Zapisujemy roślinę bezpośrednio**
         }
 
-        if (userPlantRepository.existsByName(plantName2)) {
-            System.out.println("Plant with name " + plantName2 + " already exists. Skipping creation.");
-        } else {
+        if (!userPlantRepository.existsByName(plantName2)) {
             UserPlant plant2 = new UserPlant();
             plant2.setName(plantName2);
             plant2.setDescription("A sturdy cactus.");
             plant2.setSpecies(species2);
             plant2.setLastWatered(LocalDateTime.now().minusWeeks(1));
             plant2.setCreated(LocalDateTime.now());
-            plant2.setUser(user); 
-            user.getUserPlants().add(plant2);
+            plant2.setUser(user);
+
+            userPlantRepository.save(plant2); // **Zapisujemy roślinę bezpośrednio**
         }
-        
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
-        // Zapis użytkownika wraz z roślinami do bazy danych
-        appUserRepository.save(user);
 
         System.out.println("Data initialized: user and plants added.");
     }

@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.NoArgsConstructor;
+import lombok.AllArgsConstructor;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -13,7 +14,14 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 @Getter
 @Setter
 @NoArgsConstructor
+@AllArgsConstructor
 public class Species {
+
+
+    public Species(String name) { // Konstruktor z nazwą
+        this.name = name;
+    }
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY) 
     private Long id;

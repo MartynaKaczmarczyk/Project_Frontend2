@@ -16,6 +16,7 @@ import java.util.Optional;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import org.springframework.data.domain.Sort;
 
 
 @NoArgsConstructor
@@ -57,6 +58,10 @@ public class UserPlantManager {
         AppUser user = appUserRepository.findById(userId)
             .orElseThrow(() -> new RuntimeException("User not found"));
         System.out.println(newPlant);
+
+        if (userPlantRepository.existsByNameAndUserId(newPlant.getName(), userId)) {
+            return false; // Roślina już istnieje – nie zapisujemy duplikatu
+        }
         // Sprawdź, czy gatunek rośliny istnieje
         Species species = speciesRepository.findByName(newPlant.getSpecies().getName())
             .orElseThrow(() -> new RuntimeException("Species not found"));
@@ -77,10 +82,14 @@ public class UserPlantManager {
                 newPlant.setLastEvents(eventsToAdd);
                 userPlantRepository.save(newPlant);  
                 
-        
+            // if (userPlantRepository.existsByNameAndUserId(newPlant.getName(), userId)) {
+            //         return true;
+            //     }
                 // Dodaj roślinę do listy roślin użytkownika
-                user.getUserPlants().add(newPlant);
-                appUserRepository.save(user);
+                // user.getUserPlants().add(newPlant);
+                // appUserRepository.save(user);
+
+                
             return true;
         } 
         return false;
@@ -150,6 +159,10 @@ public class UserPlantManager {
         System.out.println("FFFF"+userPlantRepository.findByNameContainingIgnoreCaseAndUser_Id(prefix, userId)+"FFFF");
 
         return userPlantRepository.findByNameContainingIgnoreCaseAndUser_Id(prefix, userId);
+    }
+
+    public List<UserPlant> getPlantsSortedByUserId(Long userId, Sort sort) {
+        return userPlantRepository.findByUserId(userId, sort);
     }
 
     
