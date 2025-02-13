@@ -1,8 +1,7 @@
-
-$primary-color: #3498db;
-$secondary-color: #2ecc71;
+$primary-color: #00573F;
+$secondary-color: #90EE90;
 $font-family: 'Arial', sans-serif;
-$button-color: #3498db;
+$button-color: #00573F;
 $input-background: #f0f0f0;
 
 body {
@@ -13,24 +12,21 @@ body {
 }
 
 .container {
+  max-width: 1200px;
   margin: 0 auto;
+  padding: 20px;
   display: flex;
   flex-direction: column;
+  gap: 20px;
 }
 
-div {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-}
-
-input[type="text"] {
-  padding: 10px;
-  font-size: 1rem;
+input[type="text"], select {
+  width: 100%;
+  max-width: 400px;
+  padding: 8px;
   border: 1px solid #ccc;
   border-radius: 5px;
   background-color: $input-background;
-  width: 100%;
 }
 
 button {
@@ -42,100 +38,80 @@ button {
   border-radius: 5px;
   cursor: pointer;
   transition: background-color 0.3s ease;
-  
+
   &:hover {
     background-color: darken($button-color, 10%);
   }
 }
 
-// Sekcja checkboxów
-label {
-  font-size: 1rem;
-  color: #333;
-  margin-left: 10px;
+.filtering {
+  display: flex;
+  gap: 5px;
+
+  button {
+    &.active {
+      background-color: #007bff;
+    }
+  }
 }
 
-
-
-div > button {
-  align-self: flex-start;
-  background-color: $secondary-color;
-  padding: 8px 16px;
-  font-size: 0.9rem;
-  cursor: pointer;
+.checkbox, select {
+  margin-top: 10px;
 }
 
-// Lista roślin
-ul {
-  list-style-type: none;
-  padding: 0;
+.filtering {
+  border: #A9BA9D solid 1px;
+  border-radius: 10px;
+  padding: 5px;
 }
 
 li {
   display: flex;
   justify-content: space-between;
-  padding: 10px;
-  background-color: #fff;
-  border: 1px solid #ddd;
-  margin-bottom: 10px;
-  border-radius: 5px;
   align-items: center;
-
-  strong {
-    font-size: 1.2rem;
-    color: #333;
-  }
-
-  button {
-    background-color: $primary-color;
-    font-size: 0.8rem;
-    margin-left: 10px;
-    padding: 5px 10px;
+  padding: 10px;
+    border-bottom: 1px solid #607460;
+    gap: 10px;
+    background-color: #fff;
     border-radius: 5px;
-    cursor: pointer;
-    
-    &:hover {
-      background-color: darken($primary-color, 10%);
+    margin-bottom: 10px;
+}
+
+.lista {
+  list-style: none;
+  padding: 0;
+
+
+
+    strong {
+      font-size: 1.2rem;
+      color: #333;
+    }
+
+    button {
+      background-color: $primary-color;
+      font-size: 0.8rem;
+      margin-left: 10px;
+      padding: 5px 10px;
+      border-radius: 5px;
+      cursor: pointer;
+      &:hover {
+        background-color: darken($primary-color, 10%);
+      }
     }
   }
-}
 
 
 p {
   font-size: 1.2rem;
   color: #666;
 }
-@media screen and (min-width: 1024px) {
-    .container {
-        padding: 15px;
-      }
-    
-      input[type="text"] {
-        font-size: 0.9rem;
-      }
-    
-      button {
-        font-size: 1em;
-        padding: 16px 32px;
-      }
-    
-      label {
-        font-size: 0.9rem;
-      }
-    
-      ul {
-        padding: 10px;
-      }
-  
-  }
 
-// Responsywność
 @media screen and (max-width: 768px) {
   .container {
     padding: 15px;
     max-width: 768px;
     margin: 0 auto;
-    padding: 10px;
     display: flex;
     flex-direction: column;
     gap: 10px;
@@ -146,15 +122,35 @@ p {
   }
 
   button {
-    font-size: 0.5em;
+    font-size: 0.9rem;
     padding: 8px 16px;
   }
 
   label {
-    font-size: 0.5remrem;
+    font-size: 0.9rem;
   }
 
-  ul {
-    padding: 0;
+  .lista li {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
+
+@media screen and (min-width: 1024px) {
+  .container {
+    padding: 15px;
+  }
+
+  input[type="text"] {
+    font-size: 1rem;
+  }
+
+  button {
+    font-size: 1rem;
+    padding: 16px 32px;
+  }
+
+  label {
+    font-size: 1rem;
   }
 }

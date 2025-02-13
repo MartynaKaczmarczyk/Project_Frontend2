@@ -21,6 +21,8 @@ export class PlantListComponent implements OnInit {
   public species: Species[] = [];
   public selectedSpecies: string[] = [];
   public sortOrder: string = 'asc';
+  public filterMode: 'checkbox' | 'dropdown' = 'checkbox';
+ 
 
   public constructor(
     private plantService: PlantService,
@@ -81,6 +83,17 @@ export class PlantListComponent implements OnInit {
     }
   }
 
+  public onDropdownChange(event: Event): void {
+    const target = event.target as HTMLInputElement;
+    this.selectedSpecies.push(target.value);
+  }
+
+  public setFilterMode(mode: 'checkbox' | 'dropdown'): void {
+    this.filterMode = mode;
+    this.selectedSpecies = [];
+    this.loadPlants();
+  }
+
   public onSpeciesChange(event: Event): void {
     const checkbox = event.target as HTMLInputElement;
     if (checkbox.checked) {
@@ -123,7 +136,7 @@ export class PlantListComponent implements OnInit {
 
   public getFormattedDate(lastWatered: Date | null): string {
     if (lastWatered) {
-      return new Date(lastWatered).toISOString().split('T')[0]; // Formatowanie daty
+      return new Date(lastWatered).toISOString().split('T')[0]; 
     }
 
     return ''; 

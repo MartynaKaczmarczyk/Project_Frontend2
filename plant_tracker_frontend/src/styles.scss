@@ -54,15 +54,25 @@ nav {
     padding: 15px;
   }
 
+  body {
+    background-color: #ACE1AF;
+  }
+
+  
+
 }
 
-@media screen and (min-width: 1024px) {
+@media screen and (min-width: 1000px) {
   .container {
     padding: 20px;
   }
 
   nav {
-    padding: 30px;
+    padding: 20px;
+  }
+
+  .body{
+    background-color: #29AB87;
   }
 
 }
