@@ -1,17 +1,49 @@
 <form [formGroup]="plantForm">
-    <label for="name">Name</label>
-    <input id="name" formControlName="name" />
-  
-    <label for="description">Description</label>
-    <input id="description" formControlName="description" />
-  
-    <label for="species">Species</label>
-    <select id="species" formControlName="species">
-      <option *ngFor="let species of species" [ngValue]="species">{{ species.name }}</option>
-    </select>
-  
-    <label for="lastWatered">Last Watered</label>
-    <input type="date" id="lastWatered" formControlName="lastWatered" />
+  <label for="name">Name</label>
+  <input id="name" formControlName="name" />
+  @if (plantForm.controls.name.invalid && plantForm.controls.name.touched) {
+    <div class="error-message">
+      @if (plantForm.controls.name.errors?.['required']) {
+        <small>Nazwa jest wymagana.</small>
+      }
+      @if (plantForm.controls.name.errors?.['minlength']) {
+        <small>Nazwa musi mieć co najmniej 3 znaki.</small>
+      }
+    </div>
+  }
+
+  <label for="description">Description</label>
+  <input id="description" formControlName="description" />
+  @if (plantForm.controls.description.invalid && plantForm.controls.description.touched) {
+    <div class="error-message">
+      @if (plantForm.controls.description.errors?.['required']) {
+        <small>Opis jest wymagany.</small>
+      }
+      @if (plantForm.controls.description.errors?.['minlength']) {
+        <small>Opis musi mieć co najmniej 3 znaki.</small>
+      }
+    </div>
+  }
+
+  <label for="species">Species</label>
+  <select id="species" formControlName="species">
+    <option *ngFor="let species of species" [ngValue]="species">
+      {{ species.name }}
+    </option>
+  </select>
+  @if (plantForm.controls.species.invalid && plantForm.controls.species.touched) {
+    <div class="error-message">
+      <small>Wybór gatunku jest wymagany.</small>
+    </div>
+  }
+
+  <label for="lastWatered">Last Watered</label>
+  <input type="date" id="lastWatered" formControlName="lastWatered" />
+  @if (plantForm.controls.lastWatered.invalid && plantForm.controls.lastWatered.touched) {
+    <div class="error-message">
+      <small>Data podlewania jest wymagana.</small>
+    </div>
+  }
   
     <div>
       <label for="Event">Event</label>
@@ -20,7 +52,18 @@
       @for (event of event.controls; track $index) {
         <div [formGroup]="event">
           <input type="text" formControlName="type" placeholder="type">
+          @if (event.controls.type.invalid && event.controls.type.touched) {
+            <div class="error-message">
+              <small>Typ wydarzenia jest wymagany.</small>
+            </div>
+          }
           <input type="date" formControlName="date" placeholder="date">
+          @if (event.controls.date.invalid && event.controls.date.touched) {
+            <div class="error-message">
+              <small>Data wydarzenia jest wymagana.</small>
+            </div>
+          }
+  
           <button (click)="deleteEvent($index)">-</button>
         </div>
       }
