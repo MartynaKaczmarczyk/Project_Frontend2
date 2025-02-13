@@ -165,11 +165,8 @@ export class PlantService {
     });
 
     return this.httpClient.get<Plant[]>(
-      `http://localhost:8080/plants/plants/${userId}/}`,
-      {
-        params: params,   
-        headers: headers, 
-      }
+      `http://localhost:8080/plants/plants/${userId}`,
+      { params,   headers }
     ).pipe(
       catchError((error) => {
         console.error('Error occurred while filtering plants by checkboxes:', error);
