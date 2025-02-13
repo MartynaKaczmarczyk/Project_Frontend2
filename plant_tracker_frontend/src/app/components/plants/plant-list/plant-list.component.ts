@@ -120,4 +120,13 @@ export class PlantListComponent implements OnInit {
       }
     );
   }
+
+  public getFormattedDate(lastWatered: Date | null): string {
+    if (lastWatered) {
+      return new Date(lastWatered).toISOString().split('T')[0]; // Formatowanie daty
+    }
+
+    return ''; 
+  }
+  
 }

@@ -76,4 +76,12 @@ export class DetailedPlantComponent implements OnInit {
   public onCancelDelete(): void {
     this.showModal = false; 
   }
+
+  public getFormattedDate(lastWatered: Date | null): string {
+    if (lastWatered) {
+      return new Date(lastWatered).toISOString().split('T')[0]; // Formatowanie daty
+    }
+
+    return ''; 
+  }
 }

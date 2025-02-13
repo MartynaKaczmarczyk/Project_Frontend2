@@ -1,3 +1,4 @@
+<div class="container">
 <form [formGroup]="plantForm">
   <label for="name">Name</label>
   <input id="name" formControlName="name" />
@@ -38,6 +39,11 @@
   }
 
   <label for="lastWatered">Last Watered</label>
+  <!-- @if(plantForm.controls.lastWatered.value && !plantForm.controls.lastWatered.invalid && plantForm.controls.lastWatered.touched) {
+    <div>
+      <div class="current">Current date: {{ plantForm.controls.lastWatered.value | date: 'yyyy-MM-dd' }}</div>
+    </div>
+  } -->
   <input type="date" id="lastWatered" formControlName="lastWatered" />
   @if (plantForm.controls.lastWatered.invalid && plantForm.controls.lastWatered.touched) {
     <div class="error-message">
@@ -72,3 +78,4 @@
     <button (click)="saveForm()" [disabled]="plantForm.invalid">Submit</button>
   </form>
   
+</div>

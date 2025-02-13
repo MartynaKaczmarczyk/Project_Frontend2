@@ -1,0 +1,160 @@
+
+$primary-color: #3498db;
+$secondary-color: #2ecc71;
+$font-family: 'Arial', sans-serif;
+$button-color: #3498db;
+$input-background: #f0f0f0;
+
+body {
+  font-family: $font-family;
+  background-color: #f4f4f4;
+  margin: 0;
+  padding: 0;
+}
+
+.container {
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+}
+
+div {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+input[type="text"] {
+  padding: 10px;
+  font-size: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  background-color: $input-background;
+  width: 100%;
+}
+
+button {
+  padding: 10px 20px;
+  font-size: 1rem;
+  border: none;
+  background-color: $button-color;
+  color: white;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  
+  &:hover {
+    background-color: darken($button-color, 10%);
+  }
+}
+
+// Sekcja checkboxów
+label {
+  font-size: 1rem;
+  color: #333;
+  margin-left: 10px;
+}
+
+
+
+div > button {
+  align-self: flex-start;
+  background-color: $secondary-color;
+  padding: 8px 16px;
+  font-size: 0.9rem;
+  cursor: pointer;
+}
+
+// Lista roślin
+ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+li {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px;
+  background-color: #fff;
+  border: 1px solid #ddd;
+  margin-bottom: 10px;
+  border-radius: 5px;
+  align-items: center;
+
+  strong {
+    font-size: 1.2rem;
+    color: #333;
+  }
+
+  button {
+    background-color: $primary-color;
+    font-size: 0.8rem;
+    margin-left: 10px;
+    padding: 5px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    
+    &:hover {
+      background-color: darken($primary-color, 10%);
+    }
+  }
+}
+
+
+p {
+  font-size: 1.2rem;
+  color: #666;
+}
+@media screen and (min-width: 1024px) {
+    .container {
+        padding: 15px;
+      }
+    
+      input[type="text"] {
+        font-size: 0.9rem;
+      }
+    
+      button {
+        font-size: 1em;
+        padding: 16px 32px;
+      }
+    
+      label {
+        font-size: 0.9rem;
+      }
+    
+      ul {
+        padding: 10px;
+      }
+  
+  }
+
+// Responsywność
+@media screen and (max-width: 768px) {
+  .container {
+    padding: 15px;
+    max-width: 768px;
+    margin: 0 auto;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  input[type="text"] {
+    font-size: 0.9rem;
+  }
+
+  button {
+    font-size: 0.5em;
+    padding: 8px 16px;
+  }
+
+  label {
+    font-size: 0.5remrem;
+  }
+
+  ul {
+    padding: 0;
+  }
+}

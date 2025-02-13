@@ -73,6 +73,11 @@ form {
   }
 }
 
+.current {
+  border:#bbb;
+  color: #4caf50;
+}
+
 div {
   .event-container {
     display: flex;

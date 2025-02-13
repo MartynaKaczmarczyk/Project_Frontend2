@@ -28,14 +28,12 @@ export const PLANTS_ROUTES: Routes = [
     path: 'form',
     component: PlantFormComponent,
     title: 'Plant Add Form',
-    canDeactivate: [unsavedChangesGuard],
     canActivate: [authGuard]
   },
   {
     path: ':id/form',
     component: PlantFormComponent,
     title: 'Book Edit Form',
-    canDeactivate: [unsavedChangesGuard],
     canActivate: [authGuard]
   },
 ];

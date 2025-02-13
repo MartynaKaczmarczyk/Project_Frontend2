@@ -1,4 +1,4 @@
-
+<div class="container">
 <div>
   <div>Search bar</div>
   <input 
@@ -35,16 +35,22 @@
 </div>
 @if (plants.length > 0) {
     <ul>
+      <li>
+        <div>Name:</div>
+        <div>Species:</div>
+        <div>Last watered:</div>
+        <div></div>
+    </li>
       @for (plant of plants; track plant.id) {
         <li>
-          {{plant.id}}
-          <strong>{{ plant.name }}</strong> - {{ plant.species?.name }}
+          <strong>{{ plant.name }}</strong> 
+          <div>{{ plant.species?.name }}</div>
+          <div>{{ getFormattedDate(plant.lastWatered) }}</div>
           <button (click)="goToDetails(plant.id)">Details</button>
-          <button (click)="deletePlant(plant.id)">Delete</button>
         </li>
       }
     </ul>
   } @else {
     <p>Nie ma roślin</p>
   }
-  
+</div>

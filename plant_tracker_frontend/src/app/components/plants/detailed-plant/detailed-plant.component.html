@@ -1,9 +1,10 @@
+<div class="container">
 @if (plant) {
     <h2>{{ plant.name }}</h2>
     <p><strong>Species:</strong> {{ plant.species?.name }}</p>
     <p><strong>Description:</strong> {{ plant.description }}</p>
-    <p><strong>Last watered:</strong> {{ plant.lastWatered }}</p>
-    <p><strong>Created:</strong> {{ plant.created }}</p>
+    <p><strong>Last watered:</strong> {{ getFormattedDate(plant.lastWatered) }}</p>
+    <p><strong>Created:</strong> {{ getFormattedDate(plant.created) }}</p>
     @if (plant.lastEvents.length > 0) {
         <div>
             <h4>Events:</h4>
@@ -11,14 +12,14 @@
                 @for (event of plant.lastEvents; track event.idEvent) {
                     <li>
                         <div>Type: {{event.type}}</div>
-                        <div>Date of occurance: {{event.date}}</div>
+                        <div>Date of occurance: getFormattedDate(event.date)</div>
                     </li>
                 }
             </ul>
         </div>
     }
 
-    {{showModal}}
+
     @if (showModal) {
 
         <app-modal
@@ -32,4 +33,4 @@
 } @else {
     <p>Roślina o podanym ID nie została znaleziona.</p>
   }
-  
+</div>
