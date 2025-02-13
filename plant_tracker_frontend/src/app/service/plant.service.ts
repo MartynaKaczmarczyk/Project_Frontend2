@@ -26,7 +26,7 @@ export class PlantService{
     console.log(plant, "WYSYŁANIE");
     
     return this.httpClient.post<string>(
-      'http://localhost:8080/plants/48',
+      'http://localhost:8080/plants/49',
       plant,
       {headers, responseType: 'text' as 'json'}
     ).pipe(
@@ -68,7 +68,7 @@ export class PlantService{
       Authorization: this.authHeader,
     });
 
-    return this.httpClient.put(`http://localhost:8080/plants/${id}`, 
+    return this.httpClient.put(`http://localhost:8080/plants/49/${id}`, 
       plant, 
       { headers, responseType: 'text'}
     );

@@ -78,11 +78,12 @@ export class PlantFormComponent implements OnInit {
             : null,        
           lastWatered: plant.lastWatered,
           created: plant.created,
-          events: plant.lastEvents
+          events: []
         });
-        console.log(plant.lastEvents );
+        console.log(plant.lastEvents, "GGGGGG" );
         
         plant.lastEvents.forEach((event) => {
+          console.log(event, "EVVVENT");
           this.plantForm.controls.events.push(
             new FormGroup<EventForm>({
               idEvent: new FormControl(event.idEvent, Validators.required),
@@ -133,9 +134,12 @@ export class PlantFormComponent implements OnInit {
         }))
       };
 
-
       if (this.isEditMode) {
-        this.plantService.updatePlant(plant, plant.id);
+        this.plantService.updatePlant(plant, plant.id).subscribe((res) => {
+          console.log(res);
+          this.plantForm.reset();
+          this.router.navigate(['/plants'], {});
+        });
       } else {
         console.log(this.isEditMode);
         this.plantService.addPlant(plant).subscribe((res)=> {
